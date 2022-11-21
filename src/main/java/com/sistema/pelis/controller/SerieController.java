@@ -3,6 +3,7 @@ package com.sistema.pelis.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistema.pelis.model.Pelicula;
 import com.sistema.pelis.model.Serie;
 import com.sistema.pelis.repository.SerieReporitory;
 
@@ -31,6 +33,12 @@ public class SerieController {
 	@PostMapping("/addS")	
 	public Serie guardarSerie(@RequestBody Serie serie) {
 		return repository.save(serie);		
+	}
+	@GetMapping("/series/{id}")
+	public ResponseEntity<Serie> serieId(@PathVariable Integer id ){
+		Serie serie= repository.findById(id)
+				.orElseThrow();
+		return ResponseEntity.ok(serie);
 	}
 
 	@DeleteMapping("/deleteS/{id}")

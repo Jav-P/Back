@@ -43,6 +43,14 @@ public class PersonaController {
 		Persona actualizado = repository.save(person);  
 		return ResponseEntity.ok(person);
 	}
+	@PutMapping("/ComPersona/{id}")	
+	public ResponseEntity<Persona> compraPersona(@PathVariable Integer id) {
+		Persona person = repository.findById(id).orElseThrow();
+		person.setTransacciones(person.getTransacciones()+1);
+		
+		Persona actualizado = repository.save(person);  
+		return ResponseEntity.ok(person);
+	}
 	
 	@GetMapping("/personas/{id}")
 	public ResponseEntity<Persona> personaId(@PathVariable Integer id ){

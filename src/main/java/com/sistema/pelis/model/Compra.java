@@ -1,6 +1,5 @@
 package com.sistema.pelis.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,9 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -33,8 +29,7 @@ public class Compra {
 	private Integer pago;
 	
 	@NotNull
-	@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate fechaCompra;
+	private String fechaCompra;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -46,14 +41,7 @@ public class Compra {
 	inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "pelicula_id"))
 	private List<Pelicula> peliculas;
 	
-	public Persona getUsuario() {
-		return persona;
-	}
-
-	public void setUsuario(Persona persona) {
-		this.persona = persona;
-	}
-
+	
 
 	public Integer getId() {
 		return id;
@@ -71,27 +59,33 @@ public class Compra {
 		this.pago = pago;
 	}
 
-	public LocalDate getFechaEstreno() {
+	public String getFechaCompra() {
 		return fechaCompra;
 	}
 
-	public void setFechaEstreno(LocalDate fechaCompra) {
+	public void setFechaCompra(String fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
 
-	public Compra(Integer id, @NotNull Integer pago, @NotNull LocalDate fechaCompra, Persona persona) {
-		super();
-		this.id = id;
-		this.pago = pago;
-		this.fechaCompra = fechaCompra;
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	public List<Pelicula> getPeliculas() {
+		return peliculas;
+	}
+
+	public void setPeliculas(List<Pelicula> peliculas) {
+		this.peliculas = peliculas;
 	}
 
 	public Compra() {
 		super();
 	}
-
-	
 
 	
 	

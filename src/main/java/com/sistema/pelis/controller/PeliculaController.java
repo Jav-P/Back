@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.pelis.model.Pelicula;
+import com.sistema.pelis.model.Persona;
 import com.sistema.pelis.repository.PeliculaReporitory;
 
 @RestController
@@ -33,7 +35,14 @@ public class PeliculaController {
 	public Pelicula guardarPeli(@RequestBody Pelicula peli) {
 		return repository.save(peli);		
 	}
-	
+	@PutMapping("/comprarPeli/{id}")	
+	public ResponseEntity<Pelicula> ComprarPeli(@PathVariable Integer id) {
+		Pelicula peli = repository.findById(id).orElseThrow();
+		peli.setTransacciones(peli.getTransacciones()+1);
+		
+		Pelicula actualizado = repository.save(peli);  
+		return ResponseEntity.ok(peli);
+	}
 	@GetMapping("/peliculas/{id}")
 	public ResponseEntity<Pelicula> peliId(@PathVariable Integer id ){
 		Pelicula peli = repository.findById(id)
